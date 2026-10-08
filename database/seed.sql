@@ -1,0 +1,6 @@
+-- database/seed.sql
+-- MCTEB Seed Data
+-- This file is a placeholder. Sample data for development and testing
+-- will be added here once the schema is defined.
+--
+-- To apply:  mysql -u <user> -p <db_name> < database/seed.sql

@@ -1,0 +1,6 @@
+-- database/schema.sql
+-- MCTEB Database Schema
+-- This file is a placeholder. The full schema (tables for users, tools,
+-- rentals, feedback, etc.) will be added once the data model is finalised.
+--
+-- To apply:  mysql -u <user> -p <db_name> < database/schema.sql
