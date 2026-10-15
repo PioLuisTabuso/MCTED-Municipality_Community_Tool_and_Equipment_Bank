@@ -1,11 +1,16 @@
 // src/server.js
-// Entry point: loads the configured Express app and starts listening.
-// Keeping this minimal means app.js can be tested independently.
+// Application entry point. Verifies critical environment variables before binding to the HTTP port.
 
 import dotenv from 'dotenv';
-import app    from './app.js';
+import app from './app.js';
 
-dotenv.config(); // Ensure .env is loaded even if this file is run directly
+dotenv.config();
+
+// Ensure JWT_SECRET is configured; fail immediately at startup if missing
+if (!process.env.JWT_SECRET || process.env.JWT_SECRET.trim() === '') {
+  console.error('❌ FATAL: JWT_SECRET environment variable is missing in .env');
+  process.exit(1);
+}
 
 const PORT = process.env.PORT || 3000;
 

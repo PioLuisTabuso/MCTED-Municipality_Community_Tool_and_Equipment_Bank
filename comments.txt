@@ -1,0 +1,195 @@
+================================================================================
+MCTEB-Sys - All Extracted Comments
+Sorted by file and current line number
+================================================================================
+
+--------------------------------------------------------------------------------
+File: .gitignore
+--------------------------------------------------------------------------------
+Line 1:    # ─── Dependencies ────────────────────────────────────────────────
+Line 4:    # ─── Environment / secrets ───────────────────────────────────────
+Line 7:    # ─── User-uploaded files ─────────────────────────────────────────
+Line 10:   # ─── Log files ───────────────────────────────────────────────────
+Line 14:   # ─── OS / Editor junk ────────────────────────────────────────────
+
+--------------------------------------------------------------------------------
+File: database/schema.sql
+--------------------------------------------------------------------------------
+Line 1:    -- database/schema.sql
+Line 2:    -- MCTEB Database Schema
+Line 3:    -- This file is a placeholder. The full schema (tables for users, tools,
+Line 4:    -- rentals, feedback, etc.) will be added once the data model is finalised.
+Line 5:    --
+Line 6:    -- To apply:  mysql -u <user> -p <db_name> < database/schema.sql
+
+--------------------------------------------------------------------------------
+File: database/seed.sql
+--------------------------------------------------------------------------------
+Line 1:    -- database/seed.sql
+Line 2:    -- MCTEB Seed Data
+Line 3:    -- This file is a placeholder. Sample data for development and testing
+Line 4:    -- will be added here once the schema is defined.
+Line 5:    --
+Line 6:    -- To apply:  mysql -u <user> -p <db_name> < database/seed.sql
+
+--------------------------------------------------------------------------------
+File: database/set-seed-passwords.js
+--------------------------------------------------------------------------------
+Line 1:    // Sets a real bcrypt hash for every seeded test account (emails ending in @mcteb.test).
+Line 2:    // Usage (from the project root, after importing schema.sql and seed.sql):
+Line 3:    //   node database/set-seed-passwords.js
+Line 4:    // Development only. Test password: Password123!
+
+--------------------------------------------------------------------------------
+File: docs/.gitkeep
+--------------------------------------------------------------------------------
+Line 1:    # docs directory
+Line 2:    # Project documentation (API reference, ER diagrams, wireframes, etc.) goes here.
+
+--------------------------------------------------------------------------------
+File: src/app.js
+--------------------------------------------------------------------------------
+Line 1:    // src/app.js
+Line 2:    // Creates and configures the Express application.
+Line 3:    // Kept separate from server.js so tests can import the app without binding a port.
+Line 17:   // Read .env into process.env
+Line 21:   // ── Middleware ────────────────────────────────────────────────────────────────
+Line 23:   // Parse incoming JSON request bodies
+Line 26:   // Parse URL-encoded form data (e.g. HTML forms)
+Line 29:   // Enable CORS so a browser-based frontend can call this API
+Line 32:   // Serve files in /public as static assets (HTML, CSS, images)
+Line 35:   // ── Health Check Route ────────────────────────────────────────────────────────
+Line 37:   // GET /api/health
+Line 38:   // Returns the API status and whether the database connection is reachable.
+Line 43:   // Try to borrow a connection from the pool and run a trivial query
+Line 45:   // succeeds if MySQL is reachable
+Line 46:   // always return the connection to the pool
+Line 49:   // Database is not reachable – log the reason but don't crash the server
+Line 60:   // ── API Routes ────────────────────────────────────────────────────────────────
+Line 61:   // Each module's routes are mounted under a logical prefix.
+Line 62:   // Routes themselves are empty placeholders for now.
+Line 69:   // ── Global Error Handler ──────────────────────────────────────────────────────
+Line 70:   // Must be registered AFTER all routes so it catches errors they throw.
+
+--------------------------------------------------------------------------------
+File: src/config/db.js
+--------------------------------------------------------------------------------
+Line 1:    // src/config/db.js
+Line 2:    // Creates a shared MySQL connection pool using mysql2/promise.
+Line 3:    // All database queries throughout the app import this pool.
+Line 8:    // Load variables from .env
+Line 10:   // mysql2 createPool keeps a set of reusable connections, which is
+Line 11:   // more efficient than opening a new connection for every request.
+Line 18:   // queue requests when the pool is full
+Line 19:   // max concurrent connections
+Line 20:   // 0 = unlimited queue
+
+--------------------------------------------------------------------------------
+File: src/controllers/authController.js
+--------------------------------------------------------------------------------
+Line 1:    // src/controllers/authController.js
+Line 2:    // Placeholder – handler functions for authentication (register, login, logout).
+Line 4:    // TODO: export async function register(req, res) { ... }
+Line 5:    // TODO: export async function login(req, res) { ... }
+Line 6:    // TODO: export async function logout(req, res) { ... }
+
+--------------------------------------------------------------------------------
+File: src/controllers/feedbackController.js
+--------------------------------------------------------------------------------
+Line 1:    // src/controllers/feedbackController.js
+Line 2:    // Placeholder – handler functions for feedback and ratings.
+Line 4:    // TODO: export async function submitFeedback(req, res) { ... }
+Line 5:    // TODO: export async function getFeedbackByTool(req, res) { ... }
+Line 6:    // TODO: export async function getFeedbackByUser(req, res) { ... }
+
+--------------------------------------------------------------------------------
+File: src/controllers/rentalController.js
+--------------------------------------------------------------------------------
+Line 1:    // src/controllers/rentalController.js
+Line 2:    // Placeholder – handler functions for rental requests (request, approve, return).
+Line 4:    // TODO: export async function requestRental(req, res) { ... }
+Line 5:    // TODO: export async function getRentalById(req, res) { ... }
+Line 6:    // TODO: export async function updateRentalStatus(req, res) { ... }
+
+--------------------------------------------------------------------------------
+File: src/controllers/toolController.js
+--------------------------------------------------------------------------------
+Line 1:    // src/controllers/toolController.js
+Line 2:    // Placeholder – handler functions for tool listings (CRUD operations).
+Line 4:    // TODO: export async function getAllTools(req, res) { ... }
+Line 5:    // TODO: export async function getToolById(req, res) { ... }
+Line 6:    // TODO: export async function createTool(req, res) { ... }
+Line 7:    // TODO: export async function updateTool(req, res) { ... }
+Line 8:    // TODO: export async function deleteTool(req, res) { ... }
+
+--------------------------------------------------------------------------------
+File: src/middleware/authMiddleware.js
+--------------------------------------------------------------------------------
+Line 1:    // src/middleware/authMiddleware.js
+Line 2:    // Placeholder – JWT verification middleware.
+Line 3:    // This will check the Authorization header and attach the decoded user to req.user.
+Line 5:    // TODO:
+Line 6:    // import jwt from 'jsonwebtoken';
+Line 7:    // export function verifyToken(req, res, next) {
+Line 8:    //   const token = req.headers.authorization?.split(' ')[1];
+Line 9:    //   if (!token) return res.status(401).json({ error: 'No token provided' });
+Line 10:   //   try {
+Line 11:   //     req.user = jwt.verify(token, process.env.JWT_SECRET);
+Line 12:   //     next();
+Line 13:   //   } catch (err) {
+Line 14:   //     return res.status(403).json({ error: 'Invalid token' });
+Line 15:   //   }
+Line 16:   // }
+
+--------------------------------------------------------------------------------
+File: src/middleware/errorMiddleware.js
+--------------------------------------------------------------------------------
+Line 1:    // src/middleware/errorMiddleware.js
+Line 2:    // Global error handler – must be the LAST middleware added in app.js.
+Line 3:    // Express recognises a 4-argument middleware as an error handler.
+Line 6:    // Log the full error in development; only send a safe message to the client.
+
+--------------------------------------------------------------------------------
+File: src/routes/authRoutes.js
+--------------------------------------------------------------------------------
+Line 1:    // src/routes/authRoutes.js
+Line 2:    // Placeholder – authentication routes (register, login, logout) go here.
+Line 6:    // TODO: Add auth routes (POST /register, POST /login, POST /logout)
+
+--------------------------------------------------------------------------------
+File: src/routes/feedbackRoutes.js
+--------------------------------------------------------------------------------
+Line 1:    // src/routes/feedbackRoutes.js
+Line 2:    // Placeholder – feedback / rating routes go here.
+Line 6:    // TODO: Add feedback routes (POST /, GET /tool/:toolId, GET /user/:userId)
+
+--------------------------------------------------------------------------------
+File: src/routes/rentalRoutes.js
+--------------------------------------------------------------------------------
+Line 1:    // src/routes/rentalRoutes.js
+Line 2:    // Placeholder – rental request routes (request, approve, return) go here.
+Line 6:    // TODO: Add rental routes (POST /, GET /:id, PATCH /:id/status)
+
+--------------------------------------------------------------------------------
+File: src/routes/toolRoutes.js
+--------------------------------------------------------------------------------
+Line 1:    // src/routes/toolRoutes.js
+Line 2:    // Placeholder – tool listing routes (browse, create, update, delete) go here.
+Line 6:    // TODO: Add tool routes (GET /, POST /, GET /:id, PUT /:id, DELETE /:id)
+
+--------------------------------------------------------------------------------
+File: src/server.js
+--------------------------------------------------------------------------------
+Line 1:    // src/server.js
+Line 2:    // Entry point: loads the configured Express app and starts listening.
+Line 3:    // Keeping this minimal means app.js can be tested independently.
+Line 8:    // Ensure .env is loaded even if this file is run directly
+
+--------------------------------------------------------------------------------
+File: src/utils/README.md
+--------------------------------------------------------------------------------
+Line 1:    // src/utils/
+Line 2:    // Utility helper modules go here (e.g., token generation, file upload config,
+Line 3:    // response formatters, date helpers).
+Line 4:    // Add individual .js files as needed during feature development.
+

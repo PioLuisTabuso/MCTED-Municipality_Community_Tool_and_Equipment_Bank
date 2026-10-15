@@ -87,17 +87,63 @@ MCTEB-Sys/
 
 ---
 
-## API Endpoints (planned)
+## API Endpoints Reference
 
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | `/api/health` | Server + DB health check |
-| POST | `/api/auth/register` | Register a new user |
-| POST | `/api/auth/login` | Login and receive JWT |
-| GET | `/api/tools` | List all available tools |
-| POST | `/api/tools` | Create a new tool listing |
-| POST | `/api/rentals` | Request to rent a tool |
-| POST | `/api/feedback` | Submit a rating/review |
+### Authentication & Profile (`/api/auth`)
+| Method | Path | Access | Description |
+|--------|------|--------|-------------|
+| POST | `/api/auth/register` | Public | Register resident with multipart ID photo upload |
+| POST | `/api/auth/login` | Public | Authenticate user & return JWT token |
+| GET | `/api/auth/me` | Authenticated | Fetch active user profile |
+
+### Admin & Staff Verification (`/api/admin`)
+| Method | Path | Access | Description |
+|--------|------|--------|-------------|
+| GET | `/api/admin/users/pending` | Staff/Admin | List users pending ID verification |
+| GET | `/api/admin/users/:id/id-image` | Staff/Admin | Securely stream submitted ID photo |
+| PATCH | `/api/admin/users/:id/verification` | Staff/Admin | Approve or reject resident ID verification |
+
+### Tool Catalog & Inventory (`/api/tools`)
+| Method | Path | Access | Description |
+|--------|------|--------|-------------|
+| GET | `/api/tools` | Public | Browse tools with category filter, search, & pagination |
+| GET | `/api/tools/categories` | Public | List tool categories with counts |
+| GET | `/api/tools/:id` | Public | Detailed tool info with average ratings & availability |
+| POST | `/api/tools` | Staff/Admin | Add new tool with photo upload |
+| PUT | `/api/tools/:id` | Staff/Admin | Update tool info, specs, fee, quantity, or photo |
+| DELETE | `/api/tools/:id` | Admin | Delete/archive tool from active catalog |
+| GET | `/api/tools/:id/maintenance` | Staff/Admin | View maintenance history and active complaints |
+| PATCH | `/api/tools/:id/maintenance` | Staff/Admin | Update tool condition / maintenance status |
+
+### Rentals & Reservations (`/api/rentals`)
+| Method | Path | Access | Description |
+|--------|------|--------|-------------|
+| POST | `/api/rentals` | Verified Resident | Create reservation request with date-conflict checks |
+| GET | `/api/rentals` | Authenticated | Residents see own rentals; staff/admin see all |
+| GET | `/api/rentals/:id` | Authenticated | View rental details |
+| PATCH | `/api/rentals/:id/approve` | Staff/Admin | Approve rental request & generate provisional receipt |
+| PATCH | `/api/rentals/:id/decline` | Staff/Admin | Decline rental request |
+| PATCH | `/api/rentals/:id/cancel` | Resident | Cancel own pending rental request |
+| PATCH | `/api/rentals/:id/activate` | Staff/Admin | Mark tool physically released to resident |
+| POST | `/api/rentals/:id/return` | Staff/Admin | Return inspection; auto-calculates late & damage fees |
+| POST | `/api/rentals/:id/payment` | Authenticated | Record payment simulation & generate reference number |
+| GET | `/api/rentals/:id/receipt` | Authenticated | View official digital rental receipt |
+| PATCH | `/api/rentals/:id/penalty` | Staff/Admin | Settle or waive late/damage penalty |
+
+### Feedback, Complaints & Notifications (`/api/feedback`)
+| Method | Path | Access | Description |
+|--------|------|--------|-------------|
+| GET | `/api/feedback/reviews` | Public | List reviews with average rating for a tool |
+| POST | `/api/feedback/reviews` | Verified Resident | Submit 1–5 star rating & review for completed rental |
+| PATCH | `/api/feedback/reviews/:id/moderate` | Staff/Admin | Moderate review visibility |
+| POST | `/api/feedback/complaints` | Authenticated | Report defective tool with photo/media upload |
+| GET | `/api/feedback/complaints` | Staff/Admin | List and manage defective tool complaints |
+| POST | `/api/feedback/info-update` | Authenticated | Request correction of resident profile data |
+| GET | `/api/feedback/info-update` | Staff/Admin | View pending profile data correction requests |
+| PATCH | `/api/feedback/info-update/:id/resolve` | Staff/Admin | Approve or reject profile data correction |
+| GET | `/api/feedback/notifications` | Authenticated | List in-app notifications & unread count |
+| PATCH | `/api/feedback/notifications/:id/read` | Authenticated | Mark notification as read |
+| PATCH | `/api/feedback/notifications/read-all` | Authenticated | Mark all notifications as read |
 
 ---
 
